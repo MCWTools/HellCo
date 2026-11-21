@@ -10,7 +10,7 @@ HC.i18n.register('en', {
   // dossier
   d_file: 'FILE', d_deceased: 'DECEASED', d_age: 'Age {n}', d_death: 'Cause of death', d_scale: 'Moral scale', d_good: 'Good', d_evil: 'Evil',
   d_merits: 'Merits', d_sins: 'Sins', d_none: '(nothing on file)', d_hint: 'Intern\'s hint: {v}',
-  v_up: 'Reincarnate', v_f3: 'Floor 3', v_f6: 'Floor 6', v_f9: 'Floor 9', v_hire: 'Hire',
+  v_up: 'Reincarnate', v_f3: 'Floor 3 (mild)', v_f6: 'Floor 6 (harsh)', v_f9: 'Floor 9 (worst)', v_hire: 'Hire',
   fb_nothing: 'nothing',
   // codex
   tab_deaths: 'Deaths', tab_people: 'People', tab_lore: 'Lore', tab_ach: 'Trophies', tab_stats: 'Stats',
