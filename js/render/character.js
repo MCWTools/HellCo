@@ -77,6 +77,10 @@ HC.Character = (function () {
     const R = { x: headR * (look.headW || 1), y: headR, z: headR };
     const torsoW = (0.46 + fat * 0.34 + mus * 0.14) * sh, torsoD = 0.28 + fat * 0.3;
     const skin = look.skinHex;
+    // Family Friendly OFF: adults only, plain skin-coloured mannequin (no anatomy), nothing carried. Minors/boss/ant are always dressed.
+    const st = HC.store && HC.store.get && HC.store.get();
+    const bare = !!(st && st.settings && st.settings.familyFriendly === false && typeof look.age === 'number' && look.age >= 18 && look !== HC.Character.BOSS_LOOK);
+    if (bare) look = Object.assign({}, look, { topHex: skin, bottomHex: skin, shoeHex: skin, shoeHex2: skin, pattern: 'none', accessory: 'none', hat: 'none', glasses: 0, patch: false });
 
     // legs
     const legR = 0.1 + fat * 0.04 + mus * 0.03;
@@ -87,11 +91,11 @@ HC.Character = (function () {
       body.add(piv); return piv;
     });
     // torso
-    const tm = patternMat(look);
+    const tm = bare ? M(skin) : patternMat(look);
     const torso = mesh(new THREE.BoxGeometry(torsoW, torsoH, torsoD), tm); if (tm.userData && tm.userData.own) torso.userData.ownMat = true;
     torso.position.y = legLen + torsoH / 2; body.add(torso);
-    add(body, box(torsoW * 0.98, 0.2, torsoD * 0.98, look.bottomHex), 0, legLen + 0.06, 0);
-    if (fat > 0.45) { const b = sph(1, look.topHex, 8, 6); b.scale.set(torsoW * 0.5, 0.26 + fat * 0.12, torsoD * 0.85); b.position.set(0, legLen + 0.24, torsoD * 0.36); if (tm.map) b.material = tm; body.add(b); }
+    if (!bare) add(body, box(torsoW * 0.98, 0.2, torsoD * 0.98, look.bottomHex), 0, legLen + 0.06, 0);
+    if (fat > 0.45 && !bare) { const b = sph(1, look.topHex, 8, 6); b.scale.set(torsoW * 0.5, 0.26 + fat * 0.12, torsoD * 0.85); b.position.set(0, legLen + 0.24, torsoD * 0.36); if (tm.map) b.material = tm; body.add(b); }
     // arms
     const armR = 0.06 + mus * 0.07 + fat * 0.02, armLen = 0.62 * (look.armL || 1);
     const arms = [-1, 1].map(s => {
@@ -108,17 +112,20 @@ HC.Character = (function () {
     const hs = sph(1, skin, 10, 8); hs.scale.set(R.x, R.y, R.z); head.add(hs);
     const surf = (x, y) => Math.sqrt(Math.max(0.02, 1 - (x * x) / (R.x * R.x) - (y * y) / (R.y * R.y))) * R.z;
     const asym = look.eyeAsym || 0, eyeS = look.eyeS || 1;
-    // eyes
+    // eyes: big glossy anime-ish eyes (iris + pupil + highlight + lash line)
     const eyes = [];
-    [-1, 1].forEach((s, i) => {
-      const ex = s * (0.1 + (look.eyeGap || 0)), ey = 0.05 * R.y / 0.3 + (i === 0 ? asym * 0.045 : 0), es = eyeS * (i === 0 ? 1 + asym * 0.5 : 1);
+    [-1, 1].forEach((sd, i) => {
+      const ex = sd * (0.115 + (look.eyeGap || 0)), ey = -0.005 * R.y / 0.3 + (i === 0 ? asym * 0.04 : 0), es = eyeS * (i === 0 ? 1 + asym * 0.4 : 1);
       const g = new THREE.Group(); g.position.set(ex, ey, surf(ex, ey) - 0.01);
-      const wh = sph(0.075 * es, 0xffffff, 8, 6); wh.scale.z = 0.55; g.add(wh);
-      add(g, sph(0.038 * es, look.eyeHex, 6, 5), 0, 0, 0.04 * es);
+      const wh = sph(0.085 * es, 0xffffff, 10, 8); wh.scale.set(0.9, 1.1, 0.5); g.add(wh);
+      const ir = sph(0.062 * es, look.eyeHex, 10, 8); ir.scale.set(1, 1.15, 0.5); add(g, ir, 0, -0.004, 0.03 * es);
+      add(g, sph(0.03 * es, 0x050505, 6, 5), 0, -0.004, 0.05 * es).scale.set(1, 1.2, 0.4);
+      add(g, box(0.022 * es, 0.022 * es, 0.01, 0xffffff), -0.02 * es, 0.03 * es, 0.062 * es);
+      add(g, box(0.19 * es, 0.018, 0.02, 0x1a1210), 0, 0.1 * es, 0.03).rotation.z = sd * -0.12;
       head.add(g); eyes.push(g);
     });
     // brows
-    [-1, 1].forEach(s => { const b = box(0.13 * 0.9, 0.02 * (look.browT || 1), 0.02, look.hairHex === 0xe8e8e8 ? 0xaaaaaa : 0x1a1210); const bx = s * (0.1 + (look.eyeGap || 0)), by = 0.15 * R.y / 0.3; b.position.set(bx, by, surf(bx, by) + 0.005); b.rotation.z = s * -(look.browTilt || 0) * 0.9; head.add(b); });
+    [-1, 1].forEach(s => { const b = box(0.11, 0.014 * Math.min(1.4, look.browT || 1), 0.02, look.hairHex === 0xe8e8e8 ? 0xaaaaaa : 0x1a1210); const bx = s * (0.115 + (look.eyeGap || 0)), by = 0.19 * R.y / 0.3; b.position.set(bx, by, surf(bx, by) + 0.005); b.rotation.z = s * -(look.browTilt || 0) * 0.9; head.add(b); });
     // nose
     const ny = -0.02, nz = surf(0, ny), ns = (look.noseS || 1);
     const nHex = new THREE.Color(skin).multiplyScalar(0.88).getHex();

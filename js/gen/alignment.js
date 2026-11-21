@@ -9,19 +9,24 @@ HC.gen.alignment = (function () {
     { id: 'monster', w: 9, m: [0, 0], s: [4, 5] },
     { id: 'dual', w: 7, m: [4, 4], s: [4, 4], top: true }
   ];
+  const recent = [];
   function pickN(r, list, n, top) {
-    const src = top ? list.slice().sort((a, b) => b.pts - a.pts).slice(0, 9) : list.slice();
+    let src = top ? list.slice().sort((a, b) => b.pts - a.pts).slice(0, 24) : list.slice();
+    const fresh = src.filter(x => recent.indexOf(x) < 0);
+    if (fresh.length >= n) src = fresh;
     const out = [];
-    while (out.length < n && src.length) out.push(src.splice(r.idx(src), 1)[0]);
+    while (out.length < n && src.length) { const x = src.splice(r.idx(src), 1)[0]; out.push(x); recent.push(x); }
+    while (recent.length > 70) recent.shift();
     return out;
   }
   function sum(l) { return Math.min(100, l.reduce((a, x) => a + x.pts, 0)); }
+  // Rule (shown to the player): net = Evil - Good. hire if both >= 55.
   function verdictFor(good, evil) {
     if (good >= 55 && evil >= 55) return 'hire';
     const s = evil - good;
-    if (s <= -22) return 'up';
-    if (s <= 4) return 'f3';
-    if (s <= 34) return 'f6';
+    if (s <= 0) return 'up';
+    if (s <= 15) return 'f3';
+    if (s <= 35) return 'f6';
     return 'f9';
   }
   function make(r) {

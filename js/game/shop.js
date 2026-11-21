@@ -4,7 +4,7 @@ HC.shop = (function () {
     { id: 'stamp', max: 10, base: 25, mult: 1.55 },
     { id: 'chair', max: 10, base: 40, mult: 1.7 },
     { id: 'streak', max: 5, base: 60, mult: 1.8 },
-    { id: 'calc', max: 2, base: 80, mult: 3.5 },
+    { id: 'calc', max: 1, base: 150, mult: 1 },
     { id: 'plant', max: 1, base: 50, mult: 1 },
     { id: 'lava', max: 1, base: 120, mult: 1 },
     { id: 'poster', max: 1, base: 200, mult: 1 },

@@ -94,6 +94,8 @@ HC.panels = (function () {
       ['en', 'vi'].forEach(l => { const b = HC.el('button', 'tab' + (HC.i18n.lang === l ? ' on' : ''), l === 'en' ? 'English' : 'Tiếng Việt'); b.onclick = () => { HC.i18n.set(l); close(); settings(); }; lg.appendChild(b); });
       row(HC.t('set_lang'), lg);
       const snd = HC.el('button', 'btn', s.settings.sound !== false ? HC.t('on') : HC.t('off')); snd.onclick = () => { s.settings.sound = s.settings.sound === false; HC.store.save(); HC.audio.click(); draw(); }; row(HC.t('set_sound'), snd);
+      const ff = HC.el('button', 'btn', s.settings.familyFriendly !== false ? HC.t('on') : HC.t('off')); ff.onclick = () => { s.settings.familyFriendly = s.settings.familyFriendly === false; HC.store.save(); HC.audio.click(); draw(); }; row(HC.t('set_ff'), ff);
+      body.appendChild(HC.el('div', 'card', HC.t('set_ff_d')));
       const fs = HC.el('button', 'btn', HC.t('set_fs_btn')); fs.onclick = () => HC.fullscreen(); row(HC.t('set_fs'), fs);
       const rs = HC.el('button', 'btn', HC.t('set_reset_btn')); let armed = false;
       rs.onclick = () => { if (!armed) { armed = true; rs.textContent = HC.t('set_reset_sure'); rs.style.borderColor = '#ff4a4a'; setTimeout(() => { armed = false; rs.textContent = HC.t('set_reset_btn'); rs.style.borderColor = ''; }, 4000); } else { HC.store.reset(); location.reload(); } };

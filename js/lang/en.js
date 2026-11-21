@@ -8,6 +8,7 @@ HC.i18n.register('en', {
   ev_normal: 'Normal day', ev_double: 'Double KPI day', ev_audit: 'Audit day', ev_coffee: 'Free coffee day', ev_vip: 'VIP day',
   ev_normal_d: '', ev_double_d: 'Today: correct stamps give DOUBLE KPI!', ev_audit_d: 'Audit today: wrong stamps cost -15 KPI!', ev_coffee_d: 'Free coffee: +50% Xu on correct stamps!', ev_vip_d: 'VIP day: correct stamps give +4 Xu!',
   // dossier
+  d_rule: 'Net = Evil - Good = {n}.  ≤0 Reincarnate · 1-15 Fl.3 · 16-35 Fl.6 · 36+ Fl.9 · both ≥55 Hire',
   d_file: 'FILE', d_deceased: 'DECEASED', d_age: 'Age {n}', d_death: 'Cause of death', d_scale: 'Moral scale', d_good: 'Good', d_evil: 'Evil',
   d_merits: 'Merits', d_sins: 'Sins', d_none: '(nothing on file)', d_hint: 'Intern\'s hint: {v}',
   v_up: 'Reincarnate', v_f3: 'Floor 3 (mild)', v_f6: 'Floor 6 (harsh)', v_f9: 'Floor 9 (worst)', v_hire: 'Hire',
@@ -27,10 +28,11 @@ HC.i18n.register('en', {
   shop_stamp: 'Golden Stamp', shop_stamp_d: '+10% Xu from every correct stamp (per level).',
   shop_chair: 'Ergonomic Chair', shop_chair_d: '+8% KPI per level. Somehow it also screams.',
   shop_streak: 'Coffee Subscription', shop_streak_d: 'Raises the streak bonus cap by 5 per level.',
-  shop_calc: 'Abacus of Doom', shop_calc_d: 'Lv1: shows exact numbers. Lv2: whispers the right stamp.',
+  shop_calc: 'Abacus of Doom', shop_calc_d: 'Whispers the right stamp.',
   shop_plant: 'Desk Plant', shop_plant_d: 'Decor. It is already dead too.', shop_lava: 'Lava Lamp', shop_lava_d: 'Decor. Actual lava.', shop_poster: 'Motivational Poster', shop_poster_d: 'Decor. "Hang in there!"', shop_coffee: 'Coffee Machine', shop_coffee_d: 'Decor. Produces only black. Very black.',
   shop_max: 'MAX',
   // settings
+  set_ff: 'Family Friendly', set_ff_d: 'ON: everyone is dressed. OFF: adult souls arrive with nothing on and nothing carried (plain mannequin bodies). Under-18 souls are always dressed. Applies to the next souls.',
   set_lang: 'Language', set_sound: 'Sound', on: 'ON', off: 'OFF', set_fs: 'Fullscreen', set_fs_btn: 'Fullscreen', set_reset: 'Erase save', set_reset_btn: 'Erase', set_reset_sure: 'Sure? Click again',
   set_about: 'Made with spite and spreadsheets. Your progress is saved on this device.',
   // summary
@@ -53,7 +55,7 @@ HC.i18n.register('en', {
   sp_burny_in: '...Burny. My predecessor. Do not mention fire. Do not mention the alarms.', sp_burny_out: 'He deserves it. I mean, whatever the stamp says. Procedure.',
   // tutorial
   tut_1: 'Your first soul. Read the file on the right: how they died, their Good and Evil bars, their merits and sins.',
-  tut_2: 'Then stamp. Much more Good than Evil: Reincarnate. More Evil: Floor 3, 6 or 9, the worse they are, the deeper. Very good AND very evil? Hire them. Corporate loves a complicated person.',
+  tut_2: 'Then stamp. Check the Net line: Evil minus Good. 0 or less: Reincarnate. Above 0: Floor 3, 6 or 9, the bigger the number, the deeper. Very good AND very evil? Hire them. Corporate loves a complicated person.',
   tut_3: 'Right stamp gives KPI and Xu. Wrong stamp gives you my face. The keys 1 to 5 work too. Go.',
   // intro cutscene
   cs_report: 'DEATH REPORT', cs_name: 'Name: {name}', cs_cause: 'Cause of death: died of fear after being bitten by a non-venomous snake.', cs_note: 'Coroner\'s note: the snake is also in therapy.', cs_status: 'Status: dead. Officially. Please wait.',
